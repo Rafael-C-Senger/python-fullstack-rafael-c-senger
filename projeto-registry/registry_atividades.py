@@ -81,16 +81,29 @@ DICA:
 """
 
 # SUA SOLUÇÃO AQUI ↓↓↓
+import math
 
-# OPERACOES_REGISTRY: dict = { ... }
+OPERACOES_REGISTRY: dict = {
+    "soma": lambda a ,b: a + b,
+    "subtracao": lambda a ,b : a - b,
+    "multiplicacao": lambda a, b: a * b,
+    "divisao": lambda a, b: a / b,
+    "potencia": lambda a, b: a ** b,
+    "modulo": lambda a, b: a % b,
+    #"raiz": lambda a, b: math.sqrt(a)
+}
 
-# def calcular_depois(operacao: str, a: float, b: float) -> float:
-#     ...
+def calcular_depois(operacao: str, a: float, b: float) -> float:
+    if b == 0 and operacao == "divisao":
+                raise ZeroDivisionError("Divisão por zero.")
+    funcao = OPERACOES_REGISTRY.get(operacao, ValueError)
+    return funcao(a, b)
 
-# print("\n[DEPOIS]")
-# print(calcular_depois("soma",          10, 3))
-# print(calcular_depois("multiplicacao", 10, 3))
-# print(calcular_depois("raiz",          16, 0))   # nova operação!
+
+print("\n[DEPOIS]")
+print(calcular_depois("soma",          10, 3))
+print(calcular_depois("multiplicacao", 10, 3))
+print(calcular_depois("raiz",          16, 0))   # nova operação!
 
 
 # ==============================================================

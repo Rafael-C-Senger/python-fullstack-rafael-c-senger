@@ -4,7 +4,7 @@
 # ============================================================
 
 
-def validar_turma(nome_turma):
+def validar_turma(nome_turma: str) -> bool:
     """
     Valida o nome da turma informado pelo usuário.
 
@@ -22,10 +22,16 @@ def validar_turma(nome_turma):
     #       está vazia OU é igual à palavra "sair" (case-insensitive).
     #       Se qualquer uma das condições for verdadeira, retorne False.
     #       Caso contrário, retorne True.
-    pass  # ← apague esta linha e escreva seu código aqui
+    nome_turma.strip()
+    if nome_turma.lower() == "sair" or not nome_turma:
+        #print(f"nome {nome_turma} recusado") #Usado para debug
+        return False
+    else:
+        #print(f"Nome {nome_turma} aceito")  #Usado para debug
+        return True 
 
 
-def validar_aluno(nome_aluno):
+def validar_aluno(nome_aluno: str) -> bool:
     """
     Valida o nome do aluno informado pelo usuário.
 
@@ -45,10 +51,15 @@ def validar_aluno(nome_aluno):
     #       Use .split() para separar as palavras e confirme
     #       que o aluno informou ao menos 2 palavras.
     #       Retorne True apenas se todas as condições passarem.
-    pass  # ← apague esta linha e escreva seu código aqui
+    nome_aluno.strip()
+    if nome_aluno.lower() == "sair" or not nome_aluno or len(nome_aluno.split()) == 1:
+        return False
+    else:
+        return True
 
 
-def validar_nota(valor_digitado):
+
+def validar_nota(valor_digitado: str) -> None | float:
     """
     Valida e converte uma nota digitada pelo usuário.
 
@@ -67,4 +78,12 @@ def validar_nota(valor_digitado):
     #       Se a conversão falhar (ValueError), retorne None.
     #       Se o número estiver fora do intervalo [0.0, 10.0], retorne None.
     #       Se tudo estiver correto, retorne o float convertido.
-    pass  # ← apague esta linha e escreva seu código aqui
+    valor = valor_digitado.replace(",", ".")
+    #print(valor)
+    try:
+        valor = float(valor)
+    except ValueError:
+        return None
+    if valor < 0 or valor > 10:
+        return None
+    return valor

@@ -7,7 +7,7 @@ import json
 import os
 
 
-def salvar_nota(turma, aluno, nota1, nota2, nota3):
+def salvar_nota(turma: str, aluno: str, nota1: float, nota2: float, nota3: float) -> None:
     """
     Salva os dados de um aluno em um arquivo JSON dentro da pasta /notas.
 
@@ -54,10 +54,33 @@ def salvar_nota(turma, aluno, nota1, nota2, nota3):
     # TODO (Passo 6): Abra o arquivo para escrita com open() e salve
     #                 com json.dump(). Use indent=4 para formatar.
 
-    pass  # ← apague esta linha e escreva seu código aqui
+    media = round((nota1 + nota2 + nota3)/3, 2)
+
+    registro = {
+        "aluno": aluno,
+        "nota1": nota1,
+        "nota2": nota2,
+        "nota3": nota3,
+        "media": media
+    }
+
+    caminho = os.path.join("notas", turma.replace(" ", "_") + ".json") # Ao executar o arquivo deve estar no mesmo diretório
+    if os.path.exists(caminho):
+        with open(caminho, "r", encoding="utf-8") as f:
+            dados = json.load(f)
+    else:
+        dados = []
+
+    dados.append(registro)
+    #print(caminho) #debug
+    #print(dados) #debug
+    with open(caminho, "w", encoding="utf-8") as f:
+        json.dump(dados, f, ensure_ascii=False,  indent=4)
+    print("Nota salva com sucesso\n")
 
 
-def ler_notas(turma):
+
+def ler_notas(turma: str):
     """
     Lê e exibe todas as notas de uma turma salvas no arquivo JSON.
 
@@ -83,5 +106,19 @@ def ler_notas(turma):
     #                 Nota 1: 8.0  |  Nota 2: 7.5  |  Nota 3: 9.0
     #                 Média : 8.17
     #                 ─────────────────────────────
+    caminho = os.path.join("notas", turma.replace(" ", "_") + ".json") # Ao executar o arquivo deve estar no mesmo diretório
+    if not os.path.exists(caminho):
+        return print(f"Não há notas regitradas para a turma {turma}")
 
-    pass  # ← apague esta linha e escreva seu código aqui
+    with open(caminho, "r", encoding="utf-8") as f:
+        arquivo = json.load(f)
+
+    print(f"Registro da turma {turma}")
+    for aluno in arquivo:
+        print("-"*45)
+        print(f"Aluno: {aluno["aluno"]}")
+        print(f"Nota 1: {aluno["nota1"]} | Nota 2: {aluno["nota2"]} | Nota 3: {aluno["nota3"]}")
+        print(f"Média {aluno["media"]}")
+
+    
+    

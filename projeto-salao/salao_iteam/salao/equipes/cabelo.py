@@ -19,7 +19,7 @@ from salao.equipes.equipe import Equipe
 
 
 # BUG 9 ↓  não herda de Equipe
-class EquipeCabelo:       # ← ERRADO: deveria ser  class EquipeCabelo(Equipe):
+class EquipeCabelo(Equipe):       # ← Corrigido
     """
     Equipe responsável pelos serviços de cabelo e barba.
     """
@@ -27,8 +27,7 @@ class EquipeCabelo:       # ← ERRADO: deveria ser  class EquipeCabelo(Equipe):
     # BUG 9 ↓  __init__ não chama super().__init__
     def __init__(self):
         # ERRADO: deveria ter  super().__init__("Cabelo & Barba")
-        self.nome_equipe = "Cabelo & Barba"
-        self._membros    = []               # precisou redeclarar porque não herdou!
+        super().__init__("Cabelo & Barba")             # precisou redeclarar porque não herdou!
 
     def descricao_servicos(self) -> str:
         return "Corte, coloração, escova, barba e bigode."
